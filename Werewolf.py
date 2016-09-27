@@ -12,6 +12,8 @@ v0.2.1
 import os
 import winsound
 import time
+import logging
+logging.basicConfig(level=logging.INFO)
 
 #定义纯数字输入方法
 def raw_int(tips):
@@ -28,7 +30,7 @@ def raw_int(tips):
 def role(role):
     '''role是否有？'''
     #role有的话就返回1，没有返回0
-    _role_in = input('是否有%s(Y/n)?' % role)
+    _role_in = input('是否有%s(Y/n)？' % role)
     if _role_in == '' or _role_in == 'y' or _role_in =='Y':
         return 1
     else:
@@ -105,6 +107,18 @@ def wizard_phase(dead,l,save_self):
     time.sleep(3)
     return (_use_save,_use_poison)
 
+def guard_phase(role_list):
+    '''守卫阶段，反馈守护玩家号码'''
+    cls = os.system('cls')
+    winsound.Beep(1000,1000)#唤醒守卫
+    _guard = raw_int('守卫，请输入你的号码：')
+    _guarded = raw_int('请输入你要守卫的玩家号码：')
+    role_list[_guard-1] = '守卫'
+    input('<回车继续>')
+    print('守卫闭眼。')
+    time.sleep(3)
+    return _guarded
+
 #====================game start====================
 #游戏启动清屏
 cls = os.system('cls')
@@ -128,6 +142,7 @@ while True:
         print('没狼玩个P啊。')
 
 #游戏配置设置。（最大支持：女巫、预言家）
+farseer_in = role('先知')
 wizard_in = role('女巫')
 #女巫是否能自救设置
 wizard_saveself = input('女巫是否能自救(y/N)?：')
@@ -135,7 +150,7 @@ if wizard_saveself == '' or wizard_saveself == 'n' or wizard_saveself == 'N':
     wizard_saveself = 0
 else:
     wizard_saveself = 1
-farseer_in = role('先知')
+guard_in = role('守卫')
 
 player_role = ['好人']*player_num#生成玩家身份序列
 player_stat = ['存活']*player_num#生存玩家存活序列
@@ -156,6 +171,14 @@ else:
 if farseer_in == 1:
     farseer_phase(player_role)
 
+#守卫阶段
+if guard_in == 1:
+    guarded_player = guard_phase(player_role)
+if guarded_player == killed_player:
+    player_stat[killed_player-1] = '存活'
+    killed_player = 0
+    today_dead.pop()
+
 #女巫阶段
 if wizard_in ==1:
     save,poisoned_num = wizard_phase(killed_player, player_role,wizard_saveself)
@@ -172,11 +195,13 @@ winsound.Beep(1000,1000)#天亮
 #死亡号码排序
 today_dead.sort()
 print('请参与警长选举的玩家一起举手。')
+#宣布死讯
 input('<回车发布今晚死讯>')
 if today_dead == []:
     print('今晚平安夜。')
 else:
     print('今晚死亡的玩家是%s' % today_dead)
+#开启上帝视角
 input('<回车开启上帝视角>')
 i = 1
 while i <= player_num:
