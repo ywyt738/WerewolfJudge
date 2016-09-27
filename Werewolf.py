@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 '''
 这是一个狼人杀首夜法官工具
-版本:v0.2
+版本:v0.2.1
 支持角色：女巫，先知
 v0.2
 - 新增女巫自救开关
+v0.2.1
+- 修复狼人空刀，女巫能够使用解药的bug。
 '''
 import os
 import winsound
@@ -85,8 +87,12 @@ def wizard_phase(dead,l,save_self):
             print('今晚你死了，不能自救。')
             _whether_use = 'n'
     else:
-        print('今晚%d号死了。' % dead)
-        _whether_use = input('你要使用解药吗？(y/n)')
+        if dead == 0:
+            print('今晚没人死。')
+            _whether_use = 'n'
+        else:
+            print('今晚%d号死了。' % dead)
+            _whether_use = input('你要使用解药吗？(y/n)')
     if _whether_use == 'y' or _whether_use == 'Y':
         _use_save = 1
     #毒药阶段
@@ -124,7 +130,7 @@ while True:
 #游戏配置设置。（最大支持：女巫、预言家）
 wizard_in = role('女巫')
 #女巫是否能自救设置
-wizard_saveself = input('女巫是否能自救(y/N)？：')
+wizard_saveself = input('女巫是否能自救(y/N)?：')
 if wizard_saveself == '' or wizard_saveself == 'n' or wizard_saveself == 'N':
     wizard_saveself = 0
 else:
@@ -176,3 +182,5 @@ i = 1
 while i <= player_num:
     print('%d号玩家：%s。' %(i,player_role[i-1]))
     i += 1
+
+input()
