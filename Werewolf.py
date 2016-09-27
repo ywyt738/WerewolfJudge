@@ -3,25 +3,20 @@
 '''
 这是一个狼人杀首夜法官工具
 版本:v0.3.0
-支持角色：女巫，先知
-v0.2
-- 新增女巫自救开关
-v0.2.1
-- 修复狼人空刀，女巫能够使用解药的bug。
-v0.3
-- 新增守卫角色
+支持角色：女巫，先知，守卫
 '''
-
 
 import os
 import winsound
-import time
 
 import numput
 import werewolf_phase
 import farseer_phase
 import wizard_phase
 import guard_phase
+
+__author__ = 'HuangXiaojun'
+
 
 #使用角色询问方法
 def role(role):
