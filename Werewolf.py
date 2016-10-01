@@ -63,7 +63,7 @@ today_dead = []  # 生成死亡玩家序列
 cls = os.system('cls')  # 天黑前清屏
 
 # 狼人阶段
-killed_player, wwteam = werewolf_phase.werewolf_phase()
+killed_player, wwteam = werewolf_phase.werewolf_phase(ww_number)
 if killed_player == 0:
     pass
 else:
