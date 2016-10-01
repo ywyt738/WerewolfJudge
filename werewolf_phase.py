@@ -14,19 +14,13 @@ import winsound
 import time
 import numput
 
-
 def werewolf_phase(wws):
     cls = os.system('cls')
     winsound.Beep(1000, 1000)  # 唤醒狼人
     while True:
         tem_ww_team = input('狼人请输入你们的号码(用空格分割)：')
         # 将输入狼队的空格去掉
-        _ww_team = []
-        for a in list(tem_ww_team):
-            if a == ' ':
-                continue
-            else:
-                _ww_team.append(a)
+        _ww_team = tem_ww_team.split(' ')
         if len(_ww_team) == wws:
             break
         else:
