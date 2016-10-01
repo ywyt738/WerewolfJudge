@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 '''
 这是一个狼人杀首夜法官工具
-版本:v0.3.0
+版本:Ver0.4.0
 支持角色：女巫，先知，守卫
 '''
+__author__ = 'HuangXiaojun'
 
 import os
 import winsound
@@ -15,10 +16,7 @@ import farseer_phase
 import wizard_phase
 import guard_phase
 
-__author__ = 'HuangXiaojun'
 
-
-# 使用角色询问方法
 def role(role):
     '''role是否有？'''
     # role有的话就返回1，没有返回0
@@ -63,22 +61,26 @@ today_dead = []  # 生成死亡玩家序列
 
 # 首夜
 cls = os.system('cls')  # 天黑前清屏
+
 # 狼人阶段
-killed_player = werewolf_phase.werewolf_phase(player_role)
+killed_player, wwteam = werewolf_phase.werewolf_phase()
 if killed_player == 0:
     pass
 else:
     player_stat[killed_player - 1] = '死亡'
     today_dead.append(killed_player)
+# 将狼人加入玩家身份序列
+for i in wwteam:
+    player_role[int(i) - 1] = '狼人'
 
 # 先知阶段
 # print(farseer_in)
 if farseer_in == 1:
-    farseer_phase.farseer_phase(player_role)
+    farseer_num = farseer_phase.farseer_phase(player_role)
 
 # 守卫阶段
 if guard_in == 1:
-    guarded_player = guard_phase.guard_phase(player_role)
+    guarded_player, guard_num = guard_phase.guard_phase()
     if guarded_player == killed_player:
         player_stat[killed_player - 1] = '存活'
         killed_player = 0
@@ -86,8 +88,8 @@ if guard_in == 1:
 
 # 女巫阶段
 if wizard_in == 1:
-    save, poisoned_num = wizard_phase.wizard_phase(
-        killed_player, player_role, wizard_saveself)
+    save, poisoned_num, wizard_num = wizard_phase.wizard_phase(
+        killed_player, wizard_saveself)
     if save == 1:
         player_stat[killed_player - 1] = '存活'
         today_dead.pop()
@@ -107,6 +109,12 @@ if today_dead == []:
     print('今晚平安夜。')
 else:
     print('今晚死亡的玩家是：%s' % today_dead)
+
+# 将身份加入玩家身份序列
+player_role[farseer_num - 1] = '先知'
+player_role[guard_num - 1] = '守卫'
+player_role[wizard_num - 1] = '女巫'
+
 # 开启上帝视角
 input('<回车开启上帝视角>')
 i = 1

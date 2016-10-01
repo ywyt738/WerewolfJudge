@@ -15,23 +15,20 @@ import time
 import numput
 
 
-def werewolf_phase(role_list):
+def werewolf_phase():
     cls = os.system('cls')
-    winsound.Beep(1000,1000)#唤醒狼人
+    winsound.Beep(1000, 1000)  # 唤醒狼人
     tem_ww_team = input('狼人请输入你们的号码(用空格分割)：')
-    #将输入狼队的空格去掉
+    # 将输入狼队的空格去掉
     _ww_team = []
     for a in list(tem_ww_team):
         if a == ' ':
             continue
         else:
             _ww_team.append(a)
-    #狼人杀人时间
+    # 狼人杀人时间
     _killed_num = numput.raw_int('请输入你们想要杀的玩家号码（0为空刀）：')
-    #将狼人加入玩家身份序列
-    for i in _ww_team:
-        role_list[int(i)-1] = '狼人'
     input('<回车继续>')
     print('狼人闭眼。')
     time.sleep(3)
-    return _killed_num
+    return _killed_num, _ww_team
