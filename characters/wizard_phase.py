@@ -14,11 +14,14 @@ import winsound
 import time
 import numput
 
+wav_start = r".\audio\wizard_st.wav"
+wav_finish = r".\audio\wizard_fi.wav"
+
 
 def wizard_phase(dead, save_self):
     '''女巫阶段，反馈解救情况和毒死玩家号码'''
     cls = os.system('cls')
-    winsound.Beep(1000, 1000)  # 唤醒女巫
+    winsound.PlaySound(wav_start, winsound.SND_NODEFAULT)  # 唤醒女巫
     _wizard = numput.raw_int('女巫，请输入你的号码：')
     print('注意：女巫一晚不能同时使用两瓶药！')
     _use_save = 0
@@ -45,6 +48,7 @@ def wizard_phase(dead, save_self):
         _use_poison = numput.raw_int('你有瓶毒药是否要用？（输入想要毒死的号码，0为不使用）：')
     input('<回车继续>')
     print('女巫闭眼。')
+    winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)  # 女巫闭眼
     time.sleep(3)
     return (_use_save, _use_poison, _wizard)
 

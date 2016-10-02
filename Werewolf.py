@@ -3,7 +3,7 @@
 '''
 这是一个狼人杀首夜法官工具
 版本:Ver0.4.0
-支持角色：女巫，先知，守卫
+支持角色：女巫，预言家，守卫
 '''
 __author__ = 'HuangXiaojun'
 
@@ -50,7 +50,7 @@ while True:
         print('没狼玩个P啊。')
 
 # 游戏配置设置。（最大支持：女巫、预言家、守卫）
-farseer_in = role('先知')
+farseer_in = role('预言家')
 wizard_in = role('女巫')
 # 女巫是否能自救设置
 wizard_saveself = wizard_save_self()
@@ -74,7 +74,7 @@ else:
 for i in wwteam:
     player_role[int(i) - 1] = '狼人'
 
-# 先知阶段
+# 预言家阶段
 if farseer_in == 1:
     farseer_num = farseer(player_role)
 
@@ -99,7 +99,8 @@ if wizard_in == 1:
 
 # 天亮了
 cls = os.system('cls')
-winsound.Beep(1000, 1000)  # 天亮
+wav_dawn = r".\audio\dawn.wav"
+winsound.PlaySound(wav_dawn, winsound.SND_NODEFAULT)  # 天亮
 # 死亡号码排序
 today_dead.sort()
 print('请参与警长选举的玩家一起举手。')
@@ -111,7 +112,7 @@ else:
     print('今晚死亡的玩家是：%s' % today_dead)
 
 # 将身份加入玩家身份序列
-player_role[farseer_num - 1] = '先知'
+player_role[farseer_num - 1] = '预言家'
 player_role[guard_num - 1] = '守卫'
 player_role[wizard_num - 1] = '女巫'
 
