@@ -53,7 +53,8 @@ while True:
 farseer_in = role('预言家')
 wizard_in = role('女巫')
 # 女巫是否能自救设置
-wizard_saveself = wizard_save_self()
+if wizard_in == 1:
+    wizard_saveself = wizard_save_self()
 guard_in = role('守卫')
 
 player_role = ['好人'] * player_num  # 生成玩家身份序列
@@ -112,9 +113,12 @@ else:
     print('今晚死亡的玩家是：%s' % today_dead)
 
 # 将身份加入玩家身份序列
-player_role[farseer_num - 1] = '预言家'
-player_role[guard_num - 1] = '守卫'
-player_role[wizard_num - 1] = '女巫'
+if farseer_in == 1:
+    player_role[farseer_num - 1] = '预言家'
+if guard_in == 1:
+    player_role[guard_num - 1] = '守卫'
+if wizard_in == 1:
+    player_role[wizard_num - 1] = '女巫'
 
 # 开启上帝视角
 input('<回车开启上帝视角>')
