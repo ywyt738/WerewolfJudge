@@ -11,10 +11,11 @@ import os
 import winsound
 
 import numput
-import werewolf_phase
-import farseer_phase
-import wizard_phase
-import guard_phase
+from characters.werewolf_phase import werewolf_phase as werewolf
+from characters.farseer_phase import farseer_phase as farseer
+from characters.wizard_phase import wizard_phase as wizard
+from characters.wizard_phase import self_switch as wizard_save_self
+from characters.guard_phase import guard_phase as guard
 
 
 def role(role):
@@ -48,11 +49,11 @@ while True:
     else:
         print('没狼玩个P啊。')
 
-# 游戏配置设置。（最大支持：女巫、预言家）
+# 游戏配置设置。（最大支持：女巫、预言家、守卫）
 farseer_in = role('先知')
 wizard_in = role('女巫')
 # 女巫是否能自救设置
-wizard_saveself = wizard_phase.self_switch()
+wizard_saveself = wizard_save_self()
 guard_in = role('守卫')
 
 player_role = ['好人'] * player_num  # 生成玩家身份序列
@@ -63,7 +64,7 @@ today_dead = []  # 生成死亡玩家序列
 cls = os.system('cls')  # 天黑前清屏
 
 # 狼人阶段
-killed_player, wwteam = werewolf_phase.werewolf_phase(ww_number)
+killed_player, wwteam = werewolf(ww_number)
 if killed_player == 0:
     pass
 else:
@@ -74,13 +75,12 @@ for i in wwteam:
     player_role[int(i) - 1] = '狼人'
 
 # 先知阶段
-# print(farseer_in)
 if farseer_in == 1:
-    farseer_num = farseer_phase.farseer_phase(player_role)
+    farseer_num = farseer(player_role)
 
 # 守卫阶段
 if guard_in == 1:
-    guarded_player, guard_num = guard_phase.guard_phase()
+    guarded_player, guard_num = guard()
     if guarded_player == killed_player:
         player_stat[killed_player - 1] = '存活'
         killed_player = 0
@@ -88,7 +88,7 @@ if guard_in == 1:
 
 # 女巫阶段
 if wizard_in == 1:
-    save, poisoned_num, wizard_num = wizard_phase.wizard_phase(
+    save, poisoned_num, wizard_num = wizard(
         killed_player, wizard_saveself)
     if save == 1:
         player_stat[killed_player - 1] = '存活'
