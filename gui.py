@@ -119,9 +119,10 @@ class role_select(Frame):
             self.today_dead.append(self.killed_player)
         for i in self.wwteam:
             self.Player_role[int(i) - 1] = '狼人'
+        msg_ww_team = str(ww_list)[1:len(str(ww_list))-1]
         messagebox.showinfo('狼人阶段信息', '''
         狼队：%s。
-        今晚你们要击杀的是%s号''' % (self.wwteam, self.killed_player))
+        今晚你们要击杀的是%s号''' % (msg_ww_team, self.killed_player))
         wav_finish = r".\audio\werewolf_fi.wav"
         winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
         self.ww.destroy()
@@ -194,7 +195,7 @@ class role_select(Frame):
         self.gd2.pack()
 
     def grd_go(self):
-        messagebox.showinfo('保护信息', '你保护的人是：%d号。' % (self.protect_num.get()))
+        messagebox.showinfo('守卫信息', '今晚你保护的人是：%d号。' % (self.protect_num.get()))
         self.gd.destroy()
         self.gd1.destroy()
         self.gd2.destroy()
