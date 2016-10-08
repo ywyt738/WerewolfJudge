@@ -259,6 +259,7 @@ class role_select(Frame):
         if self.today_dead == []:
             messagebox.showinfo('今晚死讯', '今晚平安夜！')
         else:
+            self.today_dead.sort()
             messagebox.showinfo('今晚死讯', '今晚死亡的是：%s' % self.today_dead)
 
     def role_lst(self):
