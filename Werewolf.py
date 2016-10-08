@@ -110,7 +110,7 @@ input('<回车发布今晚死讯>')
 if today_dead == []:
     print('今晚平安夜。')
 else:
-    print('今晚死亡的玩家是：%s' % today_dead)
+    print('今晚死亡的玩家是：%s' % str(today_dead)[1:len(str(today_dead))-1])
 
 # 将身份加入玩家身份序列
 if farseer_in == 1:
