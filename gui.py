@@ -119,7 +119,7 @@ class role_select(Frame):
             self.today_dead.append(self.killed_player)
         for i in self.wwteam:
             self.Player_role[int(i) - 1] = '狼人'
-        msg_ww_team = str(ww_list)[1:len(str(ww_list))-1]
+        msg_ww_team = str(ww_list)[1:len(str(ww_list)) - 1]
         messagebox.showinfo('狼人阶段信息', '''
         狼队：%s。
         今晚你们要击杀的是%s号''' % (msg_ww_team, self.killed_player))
@@ -240,10 +240,12 @@ class role_select(Frame):
         wav_finish = r".\audio\wizard_fi.wav"
         if self.save.get() == 0:
             self.today_dead.pop()
+            messagebox.showinfo('女巫信息','今天晚上%s号死了，你解救了他/她。' % self.killed_player)
         elif self.save.get() != 99:
             self.today_dead.append(self.save.get())
+            messagebox.showinfo('女巫信息','今天晚上%s号死了，你没有使用解药，并且你下毒杀死了%s号' % (self.killed_player, self.save.get()))
         elif self.save.get() == 99:
-            pass
+            messagebox.showinfo('女巫信息','今天晚上%s号死了，你没有使用解药和毒药。'% self.killed_player)
         winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
         self.wd.destroy()
         self.wd1.destroy()
@@ -264,7 +266,8 @@ class role_select(Frame):
             messagebox.showinfo('今晚死讯', '今晚平安夜！')
         else:
             self.today_dead.sort()
-            messagebox.showinfo('今晚死讯', '今晚死亡的是：%s' % self.today_dead)
+            msg_dead = str(self.today_dead)[1:len(str(self.today_dead))-1]
+            messagebox.showinfo('今晚死讯', '今晚死亡的是：%s' % msg_dead)
 
     def role_lst(self):
         if self.farseer == 1:
