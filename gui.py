@@ -106,8 +106,6 @@ class role_select(Frame):
         self.ww2.pack()
 
     def ww_go(self):
-        wav_finish = r".\audio\werewolf_fi.wav"
-        winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
         ww_list = []
         for i in range(self.Player_num):
             a = self.adict['a' + str(i)].get()
@@ -121,6 +119,11 @@ class role_select(Frame):
             self.today_dead.append(self.killed_player)
         for i in self.wwteam:
             self.Player_role[int(i) - 1] = '狼人'
+        messagebox.showinfo('狼人阶段信息', '''
+        狼队：%s。
+        今晚你们要击杀的是%s号''' % (self.wwteam, self.killed_player))
+        wav_finish = r".\audio\werewolf_fi.wav"
+        winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
         self.ww.destroy()
         self.ww1.destroy()
         self.ww2.destroy()
