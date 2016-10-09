@@ -293,4 +293,5 @@ class role_select(Frame):
 start = Tk()
 app1 = role_select(master=start)
 app1.master.title('Welcome Werewolf')
+start.iconbitmap(r"werewolf.ico")
 app1.mainloop()
