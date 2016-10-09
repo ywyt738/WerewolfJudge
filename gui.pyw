@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 这是一个狼人杀首夜法官工具GUI版本
-版本:Ver0.6.0
+版本:Ver0.6.2
 支持角色：女巫，预言家，守卫
 '''
 
@@ -9,6 +9,8 @@
 from tkinter import *
 import tkinter.messagebox as messagebox
 import winsound
+from datetime import datetime
+
 
 __author__ = 'HuangXiaojun'
 
@@ -72,7 +74,10 @@ class role_select(Frame):
         ''' % (self.Player_num, self.Werewolf_num, join[self.farseer], join[self.wizard], can[self.Wizard_saveself], join[self.guard]))
         self.Player_role = ['村民'] * self.Player_num  # 生成玩家身份序列
         self.today_dead = []  # 生成死亡玩家序列
-
+        with open(r".\log.txt", 'a') as self.log_file:
+            now = datetime.now()
+            self.log_file.write(now.strftime('%b %d %H:%M\n') + '游戏配置：一共%d人，狼人%d人。预言家：%s。女巫：%s。守卫：%s。\n' % (
+                self.Player_num, self.Werewolf_num, join[self.farseer], join[self.wizard], join[self.guard]))
         self.frm_t.destroy()
         self.frm_b.destroy()
         self.destroy()
@@ -85,7 +90,7 @@ class role_select(Frame):
         self.killed_num = IntVar()
         self.ww = Frame()
         self.ww_pic = PhotoImage(file=r'.\pic\werewolf.gif')
-        Label(self.ww, image= self.ww_pic).pack()
+        Label(self.ww, image=self.ww_pic).pack()
         self.msg_label = Label(
             self.ww, text='狼人请选择你们的号码：').pack()
         self.adict = {}
@@ -123,7 +128,10 @@ class role_select(Frame):
         msg_ww_team = str(ww_list)[1:len(str(ww_list)) - 1]
         messagebox.showinfo('狼人阶段信息', '''
         狼队：%s。
-        今晚你们要击杀的是%s号''' % (msg_ww_team, self.killed_player))
+        今晚你们要击杀的是%s号。''' % (msg_ww_team, self.killed_player))
+        with open(r".\log.txt", 'a') as self.log_file:
+            self.log_file.write('狼队：%s。击杀%s\n' %
+                                (msg_ww_team, self.killed_player))
         wav_finish = r".\audio\werewolf_fi.wav"
         winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
         self.ww.destroy()
@@ -145,7 +153,7 @@ class role_select(Frame):
         self.check_num = IntVar()
         self.fe = Frame()
         self.fse_pic = PhotoImage(file=r'.\pic\farseer.gif')
-        Label(self.fe, image= self.fse_pic).pack()
+        Label(self.fe, image=self.fse_pic).pack()
         Label(self.fe, text='预言家输入你的号码：').pack()
         for r in range(1, self.Player_num + 1):
             Radiobutton(self.fe, text=r, value=r,
@@ -164,6 +172,9 @@ class role_select(Frame):
     def fse_go(self):
         messagebox.showinfo('验人结果', '你查看的人是：%d号。\n他是：%s。' % (
             self.check_num.get(), self.Player_role[self.check_num.get() - 1]))
+        with open(r".\log.txt", 'a') as self.log_file:
+            self.log_file.write('%d是预言家，查看了%d号是%s。\n' % (self.farseer_num.get(
+            ), self.check_num.get(), self.Player_role[self.check_num.get() - 1]))
         self.fe.destroy()
         self.fe1.destroy()
         self.fe2.destroy()
@@ -183,7 +194,7 @@ class role_select(Frame):
         self.protect_num = IntVar()
         self.gd = Frame()
         self.grd_pic = PhotoImage(file=r'.\pic\guard.gif')
-        Label(self.gd, image= self.grd_pic).pack()
+        Label(self.gd, image=self.grd_pic).pack()
         Label(self.gd, text='守卫输入你的号码：').pack()
         for r in range(1, self.Player_num + 1):
             Radiobutton(self.gd, text=r, value=r,
@@ -201,6 +212,8 @@ class role_select(Frame):
 
     def grd_go(self):
         messagebox.showinfo('守卫信息', '今晚你保护的人是：%d号。' % (self.protect_num.get()))
+        with open(r".\log.txt", 'a') as self.log_file:
+            self.log_file.write('%d是守卫，守护了%d号。\n' % (self.guard_num.get(), self.protect_num.get()))
         self.gd.destroy()
         self.gd1.destroy()
         self.gd2.destroy()
@@ -222,7 +235,7 @@ class role_select(Frame):
         self.save = IntVar()
         self.wd = Frame()
         self.wd_pic = PhotoImage(file=r'.\pic\wizard.gif')
-        Label(self.wd, image= self.wd_pic).pack()
+        Label(self.wd, image=self.wd_pic).pack()
         Label(self.wd, text='女巫输入你的号码：').pack()
         for r in range(1, self.Player_num + 1):
             Radiobutton(self.wd, text=r, value=r,
@@ -247,12 +260,21 @@ class role_select(Frame):
         wav_finish = r".\audio\wizard_fi.wav"
         if self.save.get() == 0:
             self.today_dead.pop()
-            messagebox.showinfo('女巫信息','今天晚上%s号死了，你解救了他/她。' % self.killed_player)
+            messagebox.showinfo('女巫信息', '今天晚上%s号死了，你解救了他/她。' %
+                                self.killed_player)
+            with open(r".\log.txt", 'a') as self.log_file:
+                self.log_file.write('%d是女巫。使用了解药。\n' % self.wizard_num.get())
         elif self.save.get() != 99:
             self.today_dead.append(self.save.get())
-            messagebox.showinfo('女巫信息','今天晚上%s号死了，你没有使用解药，并且你下毒杀死了%s号' % (self.killed_player, self.save.get()))
+            messagebox.showinfo('女巫信息', '今天晚上%s号死了，你没有使用解药，并且你下毒杀死了%s号。' % (
+                self.killed_player, self.save.get()))
+            with open(r".\log.txt", 'a') as self.log_file:
+                self.log_file.write('%d是女巫。使用了毒药，毒死了%d号。\n' % (self.wizard_num.get(), self.save.get()))
         elif self.save.get() == 99:
-            messagebox.showinfo('女巫信息','今天晚上%s号死了，你没有使用解药和毒药。'% self.killed_player)
+            messagebox.showinfo(
+                '女巫信息', '今天晚上%s号死了，你没有使用解药和毒药。' % self.killed_player)
+            with open(r".\log.txt", 'a') as self.log_file:
+                self.log_file.write('%d是女巫。没有使用解药和毒药。\n' % self.wizard_num.get())
         winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
         self.wd.destroy()
         self.wd1.destroy()
@@ -273,7 +295,7 @@ class role_select(Frame):
             messagebox.showinfo('今晚死讯', '今晚平安夜！')
         else:
             self.today_dead.sort()
-            msg_dead = str(self.today_dead)[1:len(str(self.today_dead))-1]
+            msg_dead = str(self.today_dead)[1:len(str(self.today_dead)) - 1]
             messagebox.showinfo('今晚死讯', '今晚死亡的是：%s' % msg_dead)
 
     def role_lst(self):
