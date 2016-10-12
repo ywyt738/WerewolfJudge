@@ -25,6 +25,7 @@ def wizard_phase(dead, save_self):
     _wizard = numput.raw_int('女巫，请输入你的号码：')
     print('注意：女巫一晚不能同时使用两瓶药！')
     _use_save = 0
+    _use_poison = 0
 # 解药阶段
     # 女巫死亡情况下
     if dead == _wizard:
