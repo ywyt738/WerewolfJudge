@@ -9,7 +9,6 @@ __author__ = 'HuangXiaojun'
 
 import os
 import winsound
-
 import numput
 from characters.werewolf_phase import werewolf_phase as werewolf
 from characters.farseer_phase import farseer_phase as farseer
@@ -56,20 +55,25 @@ wizard_in = role('女巫')
 if wizard_in == 1:
     wizard_saveself = wizard_save_self()
 guard_in = role('守卫')
-
-player_role = ['好人'] * player_num  # 生成玩家身份序列
-player_stat = ['存活'] * player_num  # 生存玩家存活序列
-today_dead = []  # 生成死亡玩家序列
+if wizard_in == 1 and guard_in == 1:
+    guard_and_save = numput.raw_int('同守同救是否允许(0为不允许，1为允许)？')
+# 生成玩家身份序列
+player_role = ['村民'] * player_num
+# 生成死亡玩家序列
+today_dead = []
 
 # 首夜
 cls = os.system('cls')  # 天黑前清屏
+
+# 守卫阶段
+if guard_in == 1:
+    guarded_player, guard_num = guard()
 
 # 狼人阶段
 killed_player, wwteam = werewolf(ww_number)
 if killed_player == 0:
     pass
 else:
-    player_stat[killed_player - 1] = '死亡'
     today_dead.append(killed_player)
 # 将狼人加入玩家身份序列
 for i in wwteam:
@@ -79,24 +83,37 @@ for i in wwteam:
 if farseer_in == 1:
     farseer_num = farseer(player_role)
 
-# 守卫阶段
-if guard_in == 1:
-    guarded_player, guard_num = guard()
-    if guarded_player == killed_player:
-        player_stat[killed_player - 1] = '存活'
-        killed_player = 0
-        today_dead.pop()
-
 # 女巫阶段
 if wizard_in == 1:
     save, poisoned_num, wizard_num = wizard(
         killed_player, wizard_saveself)
+    # 解药使用情况
     if save == 1:
-        player_stat[killed_player - 1] = '存活'
-        today_dead.pop()
+        # 守卫，女巫都参与游戏。判断同守同救。
+        if guard_in == 1:
+            # 判断是否允许同守同救，guard_and_save值为0是不允许，值为1是允许。
+            if guard_and_save == 0:
+                # 判断是否救的人是被杀杀的人
+                if guard_num == killed_player:
+                    # 被同守同救的人死亡
+                    pass
+                # 被杀的人不是被守护的人，使用了解药，正常复活
+                else:
+                    today_dead.pop()
+            # 允许同守同救的情况下，同守同救，死者复活
+            else:
+                today_dead.pop()
+        # 不存在守卫的情况，解药使用后，原来死亡的人复活
+        else:
+            today_dead.pop()
     if poisoned_num != 0:
-        player_stat[poisoned_num - 1] = '死亡'
         today_dead.append(poisoned_num)
+
+# 没有女巫，有守卫参与的游戏情况
+if guard_in == 1 and wizard_in == 0:
+    if guarded_player == killed_player:
+        killed_player = 0
+        today_dead.pop()
 
 # 天亮了
 cls = os.system('cls')
@@ -110,7 +127,7 @@ input('<回车发布今晚死讯>')
 if today_dead == []:
     print('今晚平安夜。')
 else:
-    print('今晚死亡的玩家是：%s' % str(today_dead)[1:len(str(today_dead))-1])
+    print('今晚死亡的玩家是：%s' % str(today_dead)[1:len(str(today_dead)) - 1])
 
 # 将身份加入玩家身份序列
 if farseer_in == 1:
