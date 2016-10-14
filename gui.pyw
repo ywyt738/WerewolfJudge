@@ -219,20 +219,29 @@ class main(Frame):
         # 根据人数生成取值变量名
         for i in list(range(self.Player_num)):
             adict['a' + str(i)] = IntVar()
+        # 狼人号码序列按钮框架
+        a = Frame(ww1)
         # 生成狼人号码输入框，每个输入框对应一个取值变量
         for i in range(self.Player_num):
-            Checkbutton(ww1, text=i + 1, onvalue=i + 1,
+            Checkbutton(a, text=i + 1, onvalue=i + 1,
                         variable=adict['a' + str(i)]).pack(side="left")
+        # 放置狼人号码序列按钮框架
+        a.pack()
         # 放置ww1 frame
         ww1.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>狼队击杀目标选择框架ww2 frame
         ww2 = Frame()
         # 狼人击杀目标输入提示label
         Label(ww2, text='狼人请选择要击杀的目标(0为空刀)：').pack()
+        # 击杀号码按钮框架
+        b = Frame(ww2)
         # 生成击杀目标号码按钮
-        for r in range(self.Player_num + 1):
-            Radiobutton(ww2, text=r, value=r,
+        Radiobutton(b,text='空刀', value=0, variable=killed_num).pack(side='bottom')
+        for r in range(1,self.Player_num + 1):
+            Radiobutton(b, text=r, value=r,
                         variable=killed_num).pack(side='left')
+        # 放置击杀号码按钮框架
+        b.pack()
         # 放置ww2 frame
         ww2.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>狼人行动确认按钮框架ww3 frame
