@@ -296,20 +296,28 @@ class main(Frame):
         Label(fe1, image=self.fse_pic).pack()
         # 预言家输入提示label
         Label(fe1, text='预言家输入你的号码：').pack()
+        # 预言家号码按钮框架
+        a = Frame(fe1)
         # 预言家号码读取按钮
         for r in range(1, self.Player_num + 1):
-            Radiobutton(fe1, text=r, value=r,
+            Radiobutton(a, text=r, value=r,
                         variable=farseer_num).pack(side='left')
+        # 放置预言家号码按钮框架
+        a.pack()
         # 放置fe1框架
         fe1.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>预言家验人输入框架fe2 frame
         fe2 = Frame()
         # 预言家验人输入提示label
         Label(fe2, text='请输入你要查看的号码：').pack()
+        # 验人按钮框架
+        b =Frame(fe2)
         # 预言家验人输入按钮
         for r in range(1, self.Player_num + 1):
-            Radiobutton(fe2, text=r, value=r,
+            Radiobutton(b, text=r, value=r,
                         variable=check_num).pack(side='left')
+        # 放置验人按钮框架
+        b.pack()
         # 放置fe2框架
         fe2.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>预言家行动确认按钮框架fe3 frame
@@ -367,20 +375,28 @@ class main(Frame):
         Label(gd1, image=self.grd_pic).pack()
         # 守卫输入提示label
         Label(gd1, text='守卫输入你的号码：').pack()
+        # 守卫号码按钮框架
+        a = Frame(gd1)
         # 守卫号码读取按钮
         for r in range(1, self.Player_num + 1):
-            Radiobutton(gd1, text=r, value=r,
+            Radiobutton(a, text=r, value=r,
                         variable=guard_num).pack(side='left')
+        # 放置守卫按钮框架
+        a.pack()
         # 放置gd1框架
         gd1.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>预言家验人输入框架gd2 frame
         gd2 = Frame()
         # 守卫守人输入提示label
         Label(gd2, text='请输入你要保护的号码：').pack()
+        # 守人按钮框架
+        b = Frame(gd2)
         # 守卫守人输入按钮
+        Radiobutton(b, text='空守', value=0, variable=protect_num).pack(side='bottom')
         for r in range(1, self.Player_num + 1):
-            Radiobutton(gd2, text=r, value=r,
+            Radiobutton(b, text=r, value=r,
                         variable=protect_num).pack(side='left')
+        b.pack()
         # 放置gd2框架
         gd2.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>守卫行动确认按钮框架gd3 frame
