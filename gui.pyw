@@ -137,7 +137,7 @@ class main(Frame):
         Checkbutton(ready2, text='预言家',
                     variable=farseer_in).grid(row=1, column=0)
         # 女巫是否参与选择框
-        Checkbutton(ready2, text='女巫',
+        Checkbutton(ready2, text='女　巫',
                     variable=wizard_in).grid(row=2, column=0)
         # 女巫自救选择框
         Radiobutton(ready2, text='不能自救', variable=wizard_saveself,
