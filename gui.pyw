@@ -590,7 +590,7 @@ class main(Frame):
             self.Today_dead.append(self.Killed_player)
         # 守卫结算
         if self.Guard_in == 1:
-            if self.Killed_player == self.Protect_num:
+            if self.Killed_player == self.Protect_num and self.Killed_player != 0:
                 self.Today_dead.pop()
         # 女巫结算
         if self.Wizard_in == 1:
@@ -633,20 +633,27 @@ class main(Frame):
         Label(dn, text='警长竞选').pack()
         # 查看死讯按钮
         Button(dn, text='查看今晚讯息', command=self.dead_msg).pack()
+        # 禁言长老有的情况下，查看禁言信息按钮
+        if self.Silence_in == 1:
+            Button(dn, text='查看禁言信息', command=self.sil_msg).pack()
         # 查看身份按钮
         Button(dn, text='查看身份', command=self.role_lst).pack()
         # 放置dn框架
         dn.pack()
 
+    # 禁言信息
+    def sil_msg(self):
+        messagebox.showinfo('禁言信息','今晚被禁言的是%s号玩家。' % self.Be_silenced_num)
+
+    # 死亡信息
     def dead_msg(self):
         # 死亡序列为空则为平安夜
         if self.Today_dead == []:
-            messagebox.showinfo('今晚讯息', '今晚平安夜！\n\n被禁言的是%d号玩家。' %
-                                self.Be_silenced_num)
+            messagebox.showinfo('今晚讯息', '今晚平安夜！')
         # 死亡序列不为空则宣布死讯
         else:
-            messagebox.showinfo('今晚讯息', '今晚死亡的是：%s。\n\n被禁言的是%d号玩家。' %
-                                (str(self.Today_dead)[1:-1], self.Be_silenced_num))
+            messagebox.showinfo('今晚讯息', '今晚死亡的是：%s。' %
+                                str(self.Today_dead)[1:-1])
 
     # 角色信息展示
     def role_lst(self):
