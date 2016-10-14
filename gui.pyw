@@ -236,8 +236,9 @@ class main(Frame):
         # 击杀号码按钮框架
         b = Frame(ww2)
         # 生成击杀目标号码按钮
-        Radiobutton(b,text='空刀', value=0, variable=killed_num).pack(side='bottom')
-        for r in range(1,self.Player_num + 1):
+        Radiobutton(b, text='空刀', value=0,
+                    variable=killed_num).pack(side='bottom')
+        for r in range(1, self.Player_num + 1):
             Radiobutton(b, text=r, value=r,
                         variable=killed_num).pack(side='left')
         # 放置击杀号码按钮框架
@@ -311,7 +312,7 @@ class main(Frame):
         # 预言家验人输入提示label
         Label(fe2, text='请输入你要查看的号码：').pack()
         # 验人按钮框架
-        b =Frame(fe2)
+        b = Frame(fe2)
         # 预言家验人输入按钮
         for r in range(1, self.Player_num + 1):
             Radiobutton(b, text=r, value=r,
@@ -392,7 +393,8 @@ class main(Frame):
         # 守人按钮框架
         b = Frame(gd2)
         # 守卫守人输入按钮
-        Radiobutton(b, text='空守', value=0, variable=protect_num).pack(side='bottom')
+        Radiobutton(b, text='不守护', value=0,
+                    variable=protect_num).pack(side='bottom')
         for r in range(1, self.Player_num + 1):
             Radiobutton(b, text=r, value=r,
                         variable=protect_num).pack(side='left')
@@ -475,24 +477,34 @@ class main(Frame):
         Label(wd1, image=self.wd_pic).pack()
         # 女巫输入提示label
         Label(wd1, text='女巫输入你的号码：').pack()
+        # 女巫号码按钮框架
+        a = Frame(wd1)
         # 女巫号码读取按钮
         for r in range(1, self.Player_num + 1):
-            Radiobutton(wd1, text=r, value=r,
+            Radiobutton(a, text=r, value=r,
                         variable=wizard_num).pack(side='left')
+        # 放置女巫号码按钮框架
+        a.pack()
         # 放置wd1框架
         wd1.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>女巫用药框架wd2 frame
         wd2 = Frame()
         # 今晚死亡信息，用药提示信息label。
-        Label(wd2, text='今天晚上%s号死了。你是否要救？是否要用毒药？' %
+        Label(wd2, text='今天晚上%s号死了。你是否要救？' %
               self.Killed_player).pack()
         # 解药使用按钮。使用解药dug变量取值0
-        Radiobutton(wd2, text='救', value=0,
-                    variable=dug).pack(side='left')
+        Radiobutton(wd2, text='救', fg='red', value=0,
+                    variable=dug).pack()
+        Label(wd2, text='是否要用毒药？').pack()
+        # 女巫毒药按钮框架
+        a = Frame(wd2)
         # 毒药使用对象按钮，毒几号，dug取值几
+        Label(a, text='毒：').pack(side='left')
         for r in range(1, self.Player_num + 1):
-            Radiobutton(wd2, text=r, value=r,
+            Radiobutton(a, text=r, value=r,
                         variable=dug).pack(side='left')
+        # 放置女巫毒药按钮框架
+        a.pack()
         # 放置wd2框架
         wd2.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>女巫不用药和行动确认按钮框架wd3 frame
@@ -553,20 +565,31 @@ class main(Frame):
         Label(si1, image=self.sil_pic).pack()
         # 禁言长老输入提示label
         Label(si1, text='禁言长老输入你的号码：').pack()
+        # 禁言长老号码按钮框架
+        a = Frame(si1)
         # 禁言长老号码读取按钮
         for r in range(1, self.Player_num + 1):
-            Radiobutton(si1, text=r, value=r,
+            Radiobutton(a, text=r, value=r,
                         variable=sil_num).pack(side='left')
+        # 放置禁言长老号码按钮框架
+        a.pack()
         # 放置sl1框架
         si1.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>禁言长老禁言对象输入框架sl2 frame
         si2 = Frame()
         # 禁言长老禁言输入提示label
-        Label(si2, text='请输入你要禁言的号码（0为不禁言）：').pack()
+        Label(si2, text='请输入你要禁言的号码：').pack()
+        # 禁言玩家号码按钮框架
+        b = Frame(si2)
+        # 空禁按钮
+        Radiobutton(b, text='不禁言', value=0,
+                    variable=silence).pack(side='bottom')
         # 禁言长老禁言输入按钮
-        for r in range(self.Player_num + 1):
-            Radiobutton(si2, text=r, value=r,
+        for r in range(1, self.Player_num + 1):
+            Radiobutton(b, text=r, value=r,
                         variable=silence).pack(side='left')
+        # 放置禁言玩家号码按钮框架
+        b.pack()
         # 放置sl2框架
         si2.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>禁言长老行动确认按钮框架sl3 frame
@@ -643,7 +666,7 @@ class main(Frame):
 
     # 禁言信息
     def sil_msg(self):
-        messagebox.showinfo('禁言信息','今晚被禁言的是%s号玩家。' % self.Be_silenced_num)
+        messagebox.showinfo('禁言信息', '今晚被禁言的是%s号玩家。' % self.Be_silenced_num)
 
     # 死亡信息
     def dead_msg(self):
@@ -678,5 +701,5 @@ if __name__ == '__main__':
     app1 = main()
     app1.master.title('Welcome Werewolf')
     app1.master.iconbitmap(r"werewolf.ico")
-    app1.option_add("*Font",('微软雅黑',20))
+    app1.option_add("*Font", ('微软雅黑', 20))
     app1.mainloop()
