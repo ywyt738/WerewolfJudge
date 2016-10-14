@@ -31,7 +31,7 @@ class main(Frame):
 
     def phase(self):
         '''流程控制函数，每个阶段结束按钮行为函数都会call这个函数，来进行下个阶段的发起'''
-        # 流程控制变量加1，表示上个阶段完成
+        # 流程控制角色阶段执行变量改为True，表示上个阶段完成
         if self.Werewolf_fi == False:
             self.ww()
         elif self.Guard_in == 1 and self.Guard_fi == False:
@@ -475,32 +475,43 @@ class main(Frame):
         # self.Protect_num
         # self.Dug
         # self.Today_dead
-        # 使用解药
-        tongshoutongjiu = False
-        if self.Dug == 0:
-            # 击杀的人被守护
-            if self.Protect_num == self.Killed_player:
-                # 允许则不向死亡序列中添加
-                if tongshoutongjiu == True:
-                    pass
-                # 不允许则向死亡序列中添加被击杀玩家号码
-                else:
-                    self.Today_dead.append(self.Killed_player)
-            # 击杀的人没有被守护
-            else:
-                pass
-        # 没用解药也没用毒药
-        elif self.Dug == 99:
-            # 击杀的人被守护
-            if self.Protect_num == self.Killed_player:
-                pass
-            # 击杀的人没有被守护
-            else:
-                self.Today_dead.append(self.Killed_player)
-        # 没用使用解药，但使用了毒药。
-        else:
+
+        #狼人结算
+        if self.Killed_player != 0:
             self.Today_dead.append(self.Killed_player)
-            self.Today_dead.append(self.Dug)
+        # 守卫结算
+        if self.Guard_in == 1:
+            if self.Killed_player == self.Protect_num:
+                self.Today_dead.pop()
+        # 女巫结算
+        if self.Wizard_in == 1:
+            tongshoutongjiu = False
+            # 解药结算
+            if self.Dug == 0:
+                # 是否有守卫，判断同守同救
+                if self.Guard_in == 1:
+                    # 击杀的人被守护
+                    if self.Protect_num == self.Killed_player:
+                        # 允许则不向死亡序列中添加
+                        if tongshoutongjiu == True:
+                            pass
+                        # 不允许则向死亡序列中添加被击杀玩家号码
+                        else:
+                            # 因为守卫结算已经移除了死亡号码，重新补回。
+                            self.Today_dead.append(self.Killed_player)
+                    # 击杀的人没有被守护
+                    else:
+                        self.Today_dead.pop()
+                # 没有守卫
+                else:
+                    self.Today_dead.pop()
+            # 没用解药也没用毒药
+            elif self.Dug == 99:
+                pass
+            # 没用解药，使用了毒药
+            else:
+                self.Today_dead.append(self.Dug)
+                
         # 排序死亡序列
         self.Today_dead.sort()
         # 天亮音效路径
@@ -519,12 +530,15 @@ class main(Frame):
         dn.pack()
 
     def dead_msg(self):
+        # 死亡序列为空则为平安夜
         if self.Today_dead == []:
             messagebox.showinfo('今晚死讯', '今晚平安夜！')
+        # 死亡序列不为空则宣布死讯
         else:
             messagebox.showinfo('今晚死讯', '今晚死亡的是：%s' %
                                 str(self.Today_dead)[1:-1])
 
+    # 角色信息展示
     def role_lst(self):
         if self.Farseer_in == 1:
             self.Player_role[self.Farseer_num - 1] = '预言家'
@@ -532,6 +546,7 @@ class main(Frame):
             self.Player_role[self.Guard_num - 1] = '守卫'
         if self.Wizard_in == 1:
             self.Player_role[self.Wizard_num - 1] = '女巫'
+        # 生成玩家身份信息
         i = 1
         txt = ''
         while i <= self.Player_num:
@@ -539,10 +554,9 @@ class main(Frame):
             i += 1
         messagebox.showinfo('身份信息', txt)
 
-startgo = Tk()
-app1 = main(master=startgo)
-app1.master.title('Welcome Werewolf')
-startgo.iconbitmap(r"werewolf.ico")
 
 if __name__ == '__main__':
+    app1 = main()
+    app1.master.title('Welcome Werewolf')
+    app1.master.iconbitmap(r"werewolf.ico")
     app1.mainloop()
