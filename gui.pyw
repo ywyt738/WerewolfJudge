@@ -27,7 +27,7 @@ class main(Frame):
         self.Guard_fi = False
         self.Farseer_fi = False
         self.Wizard_fi = False
-        self.Slience_fi = False
+        self.Silence_fi = False
 
     def phase(self):
         '''流程控制函数，每个阶段结束按钮行为函数都会call这个函数，来进行下个阶段的发起'''
@@ -40,15 +40,15 @@ class main(Frame):
             self.fse()
         elif self.Wizard_in == 1 and self.Wizard_fi == False:
             self.wzd()
-        elif self.Slience_in == 1 and self.Slience_fi == False:
-            self.sli()
+        elif self.Silence_in == 1 and self.Silence_fi == False:
+            self.sil()
         else:
             self.dawn()
 
     # 游戏配置阶段
     # 全程变量：玩家人数self.Player_num，狼人人数self.Werewolf_num，身份序列self.Player_role，死亡序列self.Today_dead
     # 预言家是否有self.Farseer_in，女巫是否有self.Wizard_in，女巫是否能自救self.Wizard_saveself，守卫是否有self.Guard_in
-    # 禁言长老是否有self.Slience_in
+    # 禁言长老是否有self.Silence_in
     def ready(self):
         # 定义游戏人数，狼人人数，预言家是否参与，女巫是否参与，女巫是否能自救，守卫是否参与变量，禁言长老是否参与
         self.Player_num = 0
@@ -57,7 +57,7 @@ class main(Frame):
         self.Wizard_in = 0
         self.Wizard_saveself = 0
         self.Guard_in = 0
-        self.Slience_in = 0
+        self.Silence_in = 0
 
         # 开始按钮行为
         def start():
@@ -74,7 +74,7 @@ class main(Frame):
             # 守卫是否参与取值
             self.Guard_in = guard_in.get()
             # 禁言长老是否参与取值
-            self.Slience_in = slience_in.get()
+            self.Silence_in = silence_in.get()
             # 定义角色变量转换dict
             join = {1: '有', 0: '无'}
             can = {1: '能', 0: '不能'}
@@ -85,7 +85,7 @@ class main(Frame):
             女巫：%s。女巫%s自救。
             守卫：%s。
             禁言长老：%s。
-            ''' % (self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], can[self.Wizard_saveself], join[self.Guard_in], join[self.Slience_in]))
+            ''' % (self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], can[self.Wizard_saveself], join[self.Guard_in], join[self.Silence_in]))
             # 生成玩家身份列表
             self.Player_role = ['村民'] * self.Player_num
             # 生成死亡玩家序列
@@ -94,7 +94,7 @@ class main(Frame):
             with open(r".\log.txt", 'a') as log_file:
                 now = datetime.now()
                 log_file.write(now.strftime('%b %d %H:%M\n') + '游戏配置：一共%d人，狼人%d人。预言家：%s。女巫：%s。守卫：%s。禁言长老：%s。\n' % (
-                    self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], join[self.Guard_in], join[self.Slience_in]))
+                    self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], join[self.Guard_in], join[self.Silence_in]))
             # 界面切换
             ready1.destroy()
             ready2.destroy()
@@ -111,7 +111,7 @@ class main(Frame):
         # 守卫是否使用取值变量
         guard_in = IntVar()
         # 禁言长老是否使用取值变量
-        slience_in = IntVar()
+        silence_in = IntVar()
         # 游戏人数取值变量
         player_num = IntVar()
         # 狼人人数取值变量
@@ -148,7 +148,7 @@ class main(Frame):
         Checkbutton(ready2, text='守卫',
                     variable=guard_in).grid(row=1, column=1)
         # 禁言长老是否采纳与选择框
-        Checkbutton(ready2, text='禁言长老', variable=slience_in).grid(
+        Checkbutton(ready2, text='禁言长老', variable=silence_in).grid(
             row=1, column=2)
         # 放置ready2 frame
         ready2.pack()
@@ -481,75 +481,75 @@ class main(Frame):
         wd3.pack()
 
     # 禁言长老阶段
-    # 全程变量：禁言长老号码self.Slience_num，被禁言玩家号码self.Be_slienced_num
-    def sli(self):
+    # 全程变量：禁言长老号码self.Silence_num，被禁言玩家号码self.Be_silenced_num
+    def sil(self):
         # 禁言长老号码变量
-        self.Slience_num = 0
+        self.Silence_num = 0
         # 禁言玩家号码变量
-        self.Be_slienced_num = 0
+        self.Be_silenced_num = 0
 
-        def sli_go():
+        def sil_go():
             # 获取禁言长老号码
-            self.Slience_num = sli_num.get()
+            self.Silence_num = sil_num.get()
             # 获取被禁言玩家号码
-            self.Be_slienced_num = slience.get()
+            self.Be_silenced_num = silence.get()
             # 禁言长老阶段信息弹窗
             messagebox.showinfo('禁言长老信息', '今晚你禁言的人是：%d号。' %
-                                self.Be_slienced_num)
+                                self.Be_silenced_num)
             # 禁言长老行动记录日志log.txt
             with open(r".\log.txt", 'a') as log_file:
                 log_file.write('%d是禁言长老，禁言了%d号。\n' % (
-                    self.Slience_num, self.Be_slienced_num))
+                    self.Silence_num, self.Be_silenced_num))
             # 禁言长老闭眼音效
-            # wav_finish = r".\audio\slience_fi.wav"
+            wav_finish = r".\audio\silence_fi.wav"
             # 播放禁言长老闭眼音效
-            # winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
+            winsound.PlaySound(wav_finish, winsound.SND_NODEFAULT)
             # 界面切换
-            sl1.destroy()
-            sl2.destroy()
-            sl3.destroy()
+            si1.destroy()
+            si2.destroy()
+            si3.destroy()
             # 阶段结束，call流程函数
-            self.Slience_fi = True
+            self.Silence_fi = True
             self.phase()
 
         # 禁言长老睁眼音效路径
-        # wav_start = r".\audio\slience_st.wav"
+        wav_start = r".\audio\silence_st.wav"
         # 播放禁言长老音效
-        # winsound.PlaySound(wav_start, winsound.SND_NODEFAULT)
+        winsound.PlaySound(wav_start, winsound.SND_NODEFAULT)
         # 禁言取值变量
-        sli_num = IntVar()
+        sil_num = IntVar()
         # 禁言玩家取值变量
-        slience = IntVar()
+        silence = IntVar()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>禁言长老号码输入框架sl1 frame
-        sl1 = Frame()
+        si1 = Frame()
         # 禁言长老图片路径
-        self.sli_pic = PhotoImage(file=r'.\pic\slience.gif')
+        self.sil_pic = PhotoImage(file=r'.\pic\silence.gif')
         # 禁言长老图片label
-        Label(sl1, image=self.sli_pic).pack()
+        Label(si1, image=self.sil_pic).pack()
         # 禁言长老输入提示label
-        Label(sl1, text='禁言长老输入你的号码：').pack()
+        Label(si1, text='禁言长老输入你的号码：').pack()
         # 禁言长老号码读取按钮
         for r in range(1, self.Player_num + 1):
-            Radiobutton(sl1, text=r, value=r,
-                        variable=sli_num).pack(side='left')
+            Radiobutton(si1, text=r, value=r,
+                        variable=sil_num).pack(side='left')
         # 放置sl1框架
-        sl1.pack()
+        si1.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>禁言长老禁言对象输入框架sl2 frame
-        sl2 = Frame()
+        si2 = Frame()
         # 禁言长老禁言输入提示label
-        Label(sl2, text='请输入你要禁言的号码（0为不禁言）：').pack()
+        Label(si2, text='请输入你要禁言的号码（0为不禁言）：').pack()
         # 禁言长老禁言输入按钮
         for r in range(self.Player_num + 1):
-            Radiobutton(sl2, text=r, value=r,
-                        variable=slience).pack(side='left')
+            Radiobutton(si2, text=r, value=r,
+                        variable=silence).pack(side='left')
         # 放置sl2框架
-        sl2.pack()
+        si2.pack()
         # >>>>>>>>>>>>>>>>>>>>>>>>>>禁言长老行动确认按钮框架sl3 frame
-        sl3 = Frame()
+        si3 = Frame()
         # 守卫行动按钮
-        Button(sl3, text='确定', command=sli_go).pack()
+        Button(si3, text='确定', command=sil_go).pack()
         # 放置sl3框架
-        sl3.pack()
+        si3.pack()
 
     # 天亮阶段，结算
     def dawn(self):
@@ -558,7 +558,7 @@ class main(Frame):
         # self.Protect_num
         # self.Dug
         # self.Today_dead
-        # self.Be_slienced_num
+        # self.Be_silenced_num
 
         # 狼人结算
         if self.Killed_player != 0:
@@ -617,11 +617,11 @@ class main(Frame):
         # 死亡序列为空则为平安夜
         if self.Today_dead == []:
             messagebox.showinfo('今晚讯息', '今晚平安夜！\n\n被禁言的是%d号玩家。' %
-                                self.Be_slienced_num)
+                                self.Be_silenced_num)
         # 死亡序列不为空则宣布死讯
         else:
             messagebox.showinfo('今晚讯息', '今晚死亡的是：%s。\n\n被禁言的是%d号玩家。' %
-                                (str(self.Today_dead)[1:-1], self.Be_slienced_num))
+                                (str(self.Today_dead)[1:-1], self.Be_silenced_num))
 
     # 角色信息展示
     def role_lst(self):
@@ -631,8 +631,8 @@ class main(Frame):
             self.Player_role[self.Guard_num - 1] = '守卫'
         if self.Wizard_in == 1:
             self.Player_role[self.Wizard_num - 1] = '女巫'
-        if self.Slience_in == 1:
-            self.Player_role[self.Slience_num - 1] = '禁言长老'
+        if self.Silence_in == 1:
+            self.Player_role[self.Silence_num - 1] = '禁言长老'
         # 生成玩家身份信息
         i = 1
         txt = ''
