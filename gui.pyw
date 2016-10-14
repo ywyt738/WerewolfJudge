@@ -523,9 +523,9 @@ class main(Frame):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>禁言长老号码输入框架sl1 frame
         sl1 = Frame()
         # 禁言长老图片路径
-        # self.sli_pic = PhotoImage(file=r'.\pic\slience.gif')
+        self.sli_pic = PhotoImage(file=r'.\pic\slience.gif')
         # 禁言长老图片label
-        # Label(sl1, image=self.sli_pic).pack()
+        Label(sl1, image=self.sli_pic).pack()
         # 禁言长老输入提示label
         Label(sl1, text='禁言长老输入你的号码：').pack()
         # 禁言长老号码读取按钮
@@ -646,4 +646,5 @@ if __name__ == '__main__':
     app1 = main()
     app1.master.title('Welcome Werewolf')
     app1.master.iconbitmap(r"werewolf.ico")
+    app1.option_add("*Font",('微软雅黑',20))
     app1.mainloop()
