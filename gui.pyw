@@ -83,8 +83,9 @@ class main(Frame):
             玩家一共%d人，狼人%d人。
             预言家：%s
             女巫：%s。女巫%s自救。
-            守卫：%s
-            ''' % (self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], can[self.Wizard_saveself], join[self.Guard_in]))
+            守卫：%s。
+            禁言长老：%s。
+            ''' % (self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], can[self.Wizard_saveself], join[self.Guard_in], join[self.Slience_in]))
             # 生成玩家身份列表
             self.Player_role = ['村民'] * self.Player_num
             # 生成死亡玩家序列
@@ -92,8 +93,8 @@ class main(Frame):
             # 记录游戏配置日志到log.txt
             with open(r".\log.txt", 'a') as log_file:
                 now = datetime.now()
-                log_file.write(now.strftime('%b %d %H:%M\n') + '游戏配置：一共%d人，狼人%d人。预言家：%s。女巫：%s。守卫：%s。\n' % (
-                    self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], join[self.Guard_in]))
+                log_file.write(now.strftime('%b %d %H:%M\n') + '游戏配置：一共%d人，狼人%d人。预言家：%s。女巫：%s。守卫：%s。禁言长老：%s。\n' % (
+                    self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], join[self.Guard_in], join[self.Slience_in]))
             # 界面切换
             ready1.destroy()
             ready2.destroy()
@@ -615,11 +616,11 @@ class main(Frame):
     def dead_msg(self):
         # 死亡序列为空则为平安夜
         if self.Today_dead == []:
-            messagebox.showinfo('今晚讯息', '今晚平安夜！\n被禁言的是%d号玩家。' %
+            messagebox.showinfo('今晚讯息', '今晚平安夜！\n\n被禁言的是%d号玩家。' %
                                 self.Be_slienced_num)
         # 死亡序列不为空则宣布死讯
         else:
-            messagebox.showinfo('今晚讯息', '今晚死亡的是：%s。\n被禁言的是%d号玩家。' %
+            messagebox.showinfo('今晚讯息', '今晚死亡的是：%s。\n\n被禁言的是%d号玩家。' %
                                 (str(self.Today_dead)[1:-1], self.Be_slienced_num))
 
     # 角色信息展示
