@@ -209,7 +209,7 @@ class main(Frame):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>狼队输入框架ww1 frame
         ww1 = Frame()
         # 狼人图片路径
-        self.ww_pic = PhotoImage(file=r'.\pic\werewolf.gif')
+        self.ww_pic = PhotoImage(file=r'.\pic\werewolf.png')
         # 狼人图片label
         Label(ww1, image=self.ww_pic).pack()
         # 狼人号码输入label
@@ -292,7 +292,7 @@ class main(Frame):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>预言家号码输入框架fe1 frame
         fe1 = Frame()
         # 预言家图片路径
-        self.fse_pic = PhotoImage(file=r'.\pic\farseer.gif')
+        self.fse_pic = PhotoImage(file=r'.\pic\farseer.png')
         # 预言家图片label
         Label(fe1, image=self.fse_pic).pack()
         # 预言家输入提示label
@@ -371,7 +371,7 @@ class main(Frame):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>守卫号码输入框架gd1 frame
         gd1 = Frame()
         # 守卫图片路径
-        self.grd_pic = PhotoImage(file=r'.\pic\guard.gif')
+        self.grd_pic = PhotoImage(file=r'.\pic\guard.png')
         # 守卫图片label
         Label(gd1, image=self.grd_pic).pack()
         # 守卫输入提示label
@@ -472,7 +472,7 @@ class main(Frame):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>女巫号码输入框架wd1 frame
         wd1 = Frame()
         # 女巫图片路径
-        self.wd_pic = PhotoImage(file=r'.\pic\wizard.gif')
+        self.wd_pic = PhotoImage(file=r'.\pic\wizard.png')
         # 女巫图片label
         Label(wd1, image=self.wd_pic).pack()
         # 女巫输入提示label
@@ -560,7 +560,7 @@ class main(Frame):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>禁言长老号码输入框架sl1 frame
         si1 = Frame()
         # 禁言长老图片路径
-        self.sil_pic = PhotoImage(file=r'.\pic\silence.gif')
+        self.sil_pic = PhotoImage(file=r'.\pic\silence.png')
         # 禁言长老图片label
         Label(si1, image=self.sil_pic).pack()
         # 禁言长老输入提示label
