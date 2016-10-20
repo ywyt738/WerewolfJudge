@@ -4,7 +4,7 @@
 版本:Ver0.7.1
 支持角色：女巫，预言家，守卫，禁言长老
 '''
-
+# TODO: 猎人、锈剑骑士、熊、狐狸
 
 from tkinter import *
 import tkinter.messagebox as messagebox
@@ -232,7 +232,7 @@ class main(Frame):
         # >>>>>>>>>>>>>>>>>>>>>>>>>>狼队击杀目标选择框架ww2 frame
         ww2 = Frame()
         # 狼人击杀目标输入提示label
-        Label(ww2, text='狼人请选择要击杀的目标(0为空刀)：').pack()
+        Label(ww2, text='狼人请选择要击杀的目标：').pack()
         # 击杀号码按钮框架
         b = Frame(ww2)
         # 生成击杀目标号码按钮
