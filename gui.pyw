@@ -85,7 +85,14 @@ class main(Frame):
             女巫：%s。女巫%s自救。
             守卫：%s。
             禁言长老：%s。
-            ''' % (self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], can[self.Wizard_saveself], join[self.Guard_in], join[self.Silence_in]))
+            ''' % (
+                self.Player_num, self.Werewolf_num,
+                join[self.Farseer_in],
+                join[self.Wizard_in], can[self.Wizard_saveself],
+                join[self.Guard_in],
+                join[self.Silence_in]
+            )
+            )
             # 生成玩家身份列表
             self.Player_role = ['村民'] * self.Player_num
             # 生成死亡玩家序列
@@ -93,8 +100,17 @@ class main(Frame):
             # 记录游戏配置日志到log.txt
             with open(r".\log.txt", 'a') as log_file:
                 now = datetime.now()
-                log_file.write(now.strftime('%b %d %H:%M\n') + '游戏配置：一共%d人，狼人%d人。预言家：%s。女巫：%s。守卫：%s。禁言长老：%s。\n' % (
-                    self.Player_num, self.Werewolf_num, join[self.Farseer_in], join[self.Wizard_in], join[self.Guard_in], join[self.Silence_in]))
+                log_file.write(
+                    now.strftime('%b %d %H:%M\n') +
+                    '游戏配置：一共%d人，狼人%d人。预言家：%s。女巫：%s。守卫：%s。禁言长老：%s。\n'
+                    % (
+                        self.Player_num, self.Werewolf_num,
+                        join[self.Farseer_in],
+                        join[self.Wizard_in],
+                        join[self.Guard_in],
+                        join[self.Silence_in]
+                    )
+                )
             # 界面切换
             ready1.destroy()
             ready2.destroy()
@@ -181,9 +197,10 @@ class main(Frame):
             for i in self.Ww_team:
                 self.Player_role[int(i) - 1] = '狼人'
             # 狼人行动信息弹窗
-            messagebox.showinfo('狼人阶段信息', '''
-            狼队：%s。
-            今晚你们要击杀的是%s号。''' % (str(self.Ww_team)[1:-1], self.Killed_player))
+            messagebox.showinfo(
+                '狼人阶段信息', '狼队：%s。\n今晚你们要击杀的是%s号。'
+                % (str(self.Ww_team)[1:-1], self.Killed_player)
+            )
             # 记入狼队以及狼队行动进日志log.txt
             with open(r".\log.txt", 'a') as log_file:
                 log_file.write('狼队：%s。击杀%s\n' %
@@ -267,8 +284,13 @@ class main(Frame):
                 check_num.get(), self.Player_role[check_num.get() - 1]))
             # 预言家行动记录日志log.txt
             with open(r".\log.txt", 'a') as log_file:
-                log_file.write('%d是预言家，查看了%d号是%s。\n' % (
-                    self.Farseer_num, check_num.get(), self.Player_role[check_num.get() - 1]))
+                log_file.write(
+                    '%d是预言家，查看了%d号是%s。\n'
+                    % (
+                        self.Farseer_num, check_num.get(),
+                        self.Player_role[check_num.get() - 1]
+                    )
+                )
             # 预言家闭眼音效
             wav_finish = r".\audio\farseer_fi.wav"
             # 播放预言家闭眼音效
@@ -343,7 +365,9 @@ class main(Frame):
             # 被守人号码
             self.Protect_num = protect_num.get()
             # 守卫阶段信息弹窗
-            messagebox.showinfo('守卫信息', '今晚你保护的人是：%d号。' % self.Protect_num)
+            messagebox.showinfo(
+                '守卫信息', '今晚你保护的人是：%d号。' % self.Protect_num
+            )
             # 守卫行动记录日志log.txt
             with open(r".\log.txt", 'a') as log_file:
                 log_file.write('%d是守卫，守护了%d号。\n' % (
@@ -435,8 +459,10 @@ class main(Frame):
             # 女巫使用毒药的情况
             elif self.Dug != 99:
                 # 女巫使用毒药弹窗信息
-                messagebox.showinfo('女巫信息', '今天晚上%s号死了，你没有使用解药，并且你下毒杀死了%s号。' % (
-                    self.Killed_player, self.Dug))
+                messagebox.showinfo(
+                    '女巫信息', '今天晚上%s号死了，你没有使用解药，并且你下毒杀死了%s号。'
+                    % (self.Killed_player, self.Dug)
+                )
                 # 女巫行动记录日志log.txt
                 with open(r".\log.txt", 'a') as log_file:
                     log_file.write('%d是女巫。使用了毒药，毒死了%d号。\n' % (
@@ -445,7 +471,9 @@ class main(Frame):
             elif self.Dug == 99:
                 # 女巫不用药弹窗信息
                 messagebox.showinfo(
-                    '女巫信息', '今天晚上%s号死了，你没有使用解药和毒药。' % self.Killed_player)
+                    '女巫信息', '今天晚上%s号死了，你没有使用解药和毒药。'
+                    % self.Killed_player
+                )
                 with open(r".\log.txt", 'a') as log_file:
                     log_file.write('%d是女巫。没有使用解药和毒药。\n' %
                                    self.Wizard_num)
@@ -613,7 +641,8 @@ class main(Frame):
             self.Today_dead.append(self.Killed_player)
         # 守卫结算
         if self.Guard_in == 1:
-            if self.Killed_player == self.Protect_num and self.Killed_player != 0:
+            if (self.Killed_player == self.Protect_num and
+                    self.Killed_player != 0):
                 self.Today_dead.pop()
         # 女巫结算
         if self.Wizard_in == 1:
@@ -666,7 +695,9 @@ class main(Frame):
 
     # 禁言信息
     def sil_msg(self):
-        messagebox.showinfo('禁言信息', '今晚被禁言的是%s号玩家。' % self.Be_silenced_num)
+        messagebox.showinfo(
+            '禁言信息', '今晚被禁言的是%s号玩家。' % self.Be_silenced_num
+        )
 
     # 死亡信息
     def dead_msg(self):
