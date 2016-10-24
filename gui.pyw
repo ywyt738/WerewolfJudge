@@ -32,15 +32,15 @@ class main(Frame):
     def phase(self):
         '''流程控制函数，每个阶段结束按钮行为函数都会call这个函数，来进行下个阶段的发起'''
         # 流程控制角色阶段执行变量改为True，表示上个阶段完成
-        if self.Werewolf_fi == False:
+        if self.Werewolf_fi is False:
             self.ww()
-        elif self.Guard_in == 1 and self.Guard_fi == False:
+        elif self.Guard_in == 1 and self.Guard_fi is False:
             self.grd()
-        elif self.Farseer_in == 1 and self.Farseer_fi == False:
+        elif self.Farseer_in == 1 and self.Farseer_fi is False:
             self.fse()
-        elif self.Wizard_in == 1 and self.Wizard_fi == False:
+        elif self.Wizard_in == 1 and self.Wizard_fi is False:
             self.wzd()
-        elif self.Silence_in == 1 and self.Silence_fi == False:
+        elif self.Silence_in == 1 and self.Silence_fi is False:
             self.sil()
         else:
             self.dawn()
@@ -625,7 +625,7 @@ class main(Frame):
                     # 击杀的人被守护
                     if self.Protect_num == self.Killed_player:
                         # 允许则不向死亡序列中添加
-                        if tongshoutongjiu == True:
+                        if tongshoutongjiu is True:
                             pass
                         # 不允许则向死亡序列中添加被击杀玩家号码
                         else:
